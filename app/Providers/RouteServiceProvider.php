@@ -50,6 +50,12 @@ class RouteServiceProvider extends ServiceProvider
             Route::prefix('home')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/home.php'));
+            Route::prefix('courseInfor')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/CourseInfor.php'));
+            Route::prefix('teacher')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/teacher.php'));
 
         });
     }

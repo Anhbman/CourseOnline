@@ -2,10 +2,10 @@
 -- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 22, 2021 at 04:31 AM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 7.4.25
+-- Máy chủ: localhost
+-- Thời gian đã tạo: Th10 28, 2021 lúc 05:47 AM
+-- Phiên bản máy phục vụ: 10.4.21-MariaDB
+-- Phiên bản PHP: 8.0.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,214 +18,261 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `onlinecourse`
+-- Cơ sở dữ liệu: `courseonline`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admin`
---
-
-CREATE TABLE `admin` (
-  `Account` varchar(50) NOT NULL,
-  `Pwd` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `category`
+-- Cấu trúc bảng cho bảng `category`
 --
 
 CREATE TABLE `category` (
-  `CtegoryID` int(10) NOT NULL,
-  `Name` varchar(30) NOT NULL
+  `Category_ID` int(10) NOT NULL,
+  `Category_name` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `course`
+-- Cấu trúc bảng cho bảng `course`
 --
 
 CREATE TABLE `course` (
-  `CourseID` int(10) NOT NULL,
-  `Name` varchar(30) NOT NULL,
-  `Description` text NOT NULL,
-  `Cost` int(10) UNSIGNED NOT NULL,
-  `TeacherID` int(10) NOT NULL,
-  `Image` text NOT NULL,
-  `Status` tinyint(1) NOT NULL
+  `Course_ID` int(10) NOT NULL,
+  `Course_header` varchar(30) NOT NULL,
+  `Course_description` text NOT NULL,
+  `Course_price` int(10) UNSIGNED NOT NULL,
+  `Author_ID` int(10) NOT NULL,
+  `Course_image` text NOT NULL,
+  `Course_approve` tinyint(1) NOT NULL,
+  `Course_created` date NOT NULL,
+  `Course_updated` date NOT NULL,
+  `Course_tag` int(11) NOT NULL,
+  `Course_rate` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `label`
+-- Cấu trúc bảng cho bảng `courseEnrollment`
 --
 
-CREATE TABLE `label` (
-  `LabelID` int(10) NOT NULL,
-  `Name` varchar(30) NOT NULL
+CREATE TABLE `courseEnrollment` (
+  `User_ID` int(11) NOT NULL,
+  `Course_ID` int(11) NOT NULL,
+  `Payment_ID` int(11) NOT NULL,
+  `Payment_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `lesson`
+-- Cấu trúc bảng cho bảng `discuss`
+--
+
+CREATE TABLE `discuss` (
+  `Discuss_ID` int(11) NOT NULL,
+  `User_ID` int(11) NOT NULL,
+  `Discuss_content` text NOT NULL,
+  `Course_ID` int(11) NOT NULL,
+  `Discuss_created` date NOT NULL,
+  `Parent_discuss_ID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `lesson`
 --
 
 CREATE TABLE `lesson` (
-  `LessonID` int(10) NOT NULL,
-  `Name` varchar(30) NOT NULL,
-  `Description` text NOT NULL,
-  `VideoLink` text NOT NULL,
-  `MuclucID` int(10) UNSIGNED NOT NULL,
-  `Mucluc` varchar(30) NOT NULL,
-  `Status` tinyint(1) NOT NULL
+  `Lesson_ID` int(10) NOT NULL,
+  `Lesson_header` varchar(30) NOT NULL,
+  `Lesson_description` text NOT NULL,
+  `Lesson_video` text NOT NULL,
+  `Course_ID` int(11) NOT NULL,
+  `Lesson_time` date NOT NULL,
+  `Lesson_view` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pay`
+-- Cấu trúc bảng cho bảng `paymenthistory`
 --
 
-CREATE TABLE `pay` (
-  `CourseID` int(10) NOT NULL,
-  `UserID` int(10) NOT NULL,
-  `Payment` varchar(30) NOT NULL,
-  `Detail` text NOT NULL,
-  `Time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+CREATE TABLE `paymenthistory` (
+  `Payment_ID` int(11) NOT NULL,
+  `Payment_price` int(11) NOT NULL,
+  `Payment_note` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `teacher`
+-- Cấu trúc bảng cho bảng `tag`
 --
 
-CREATE TABLE `teacher` (
-  `TeacherID` int(10) NOT NULL,
-  `Name` varchar(30) NOT NULL,
-  `Account` varchar(40) NOT NULL,
-  `Pwd` varchar(30) NOT NULL,
-  `BirthDay` date NOT NULL,
-  `Phone` varchar(15) NOT NULL,
-  `Gender` varchar(10) NOT NULL,
-  `Avatar` text NOT NULL
+CREATE TABLE `tag` (
+  `Tag_ID` int(11) NOT NULL,
+  `Tag_name` varchar(30) NOT NULL,
+  `Category_ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Cấu trúc bảng cho bảng `user`
 --
 
 CREATE TABLE `user` (
-  `UserID` int(11) NOT NULL,
-  `UserName` varchar(30) NOT NULL,
-  `Account` varchar(40) NOT NULL,
-  `Password` varchar(30) NOT NULL,
-  `Birthday` date NOT NULL,
-  `Phone` varchar(15) NOT NULL,
-  `Gender` varchar(10) NOT NULL,
-  `Avatar` text NOT NULL
+  `User_ID` int(11) NOT NULL,
+  `User_cccount` varchar(40) NOT NULL,
+  `User_password` varchar(30) NOT NULL,
+  `User_DoB` date NOT NULL,
+  `User_identify` varchar(12) NOT NULL,
+  `User_phonenumber` varchar(15) NOT NULL,
+  `User_lastseen` date NOT NULL,
+  `User_role` int(11) NOT NULL,
+  `User_image` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Indexes for dumped tables
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Indexes for table `category`
+-- Chỉ mục cho bảng `category`
 --
 ALTER TABLE `category`
-  ADD PRIMARY KEY (`CtegoryID`);
+  ADD PRIMARY KEY (`Category_ID`);
 
 --
--- Indexes for table `course`
+-- Chỉ mục cho bảng `course`
 --
 ALTER TABLE `course`
-  ADD PRIMARY KEY (`CourseID`),
-  ADD KEY `TeacherID` (`TeacherID`);
+  ADD PRIMARY KEY (`Course_ID`),
+  ADD KEY `TeacherID` (`Author_ID`);
 
 --
--- Indexes for table `label`
+-- Chỉ mục cho bảng `courseEnrollment`
 --
-ALTER TABLE `label`
-  ADD PRIMARY KEY (`LabelID`);
+ALTER TABLE `courseEnrollment`
+  ADD KEY `User_ID` (`User_ID`),
+  ADD KEY `Course_ID` (`Course_ID`),
+  ADD KEY `Payment_ID` (`Payment_ID`);
 
 --
--- Indexes for table `lesson`
+-- Chỉ mục cho bảng `discuss`
+--
+ALTER TABLE `discuss`
+  ADD PRIMARY KEY (`Discuss_ID`),
+  ADD KEY `User_ID` (`User_ID`),
+  ADD KEY `Course_ID` (`Course_ID`);
+
+--
+-- Chỉ mục cho bảng `lesson`
 --
 ALTER TABLE `lesson`
-  ADD PRIMARY KEY (`LessonID`);
+  ADD PRIMARY KEY (`Lesson_ID`),
+  ADD KEY `Course_ID` (`Course_ID`);
 
 --
--- Indexes for table `pay`
+-- Chỉ mục cho bảng `paymenthistory`
 --
-ALTER TABLE `pay`
-  ADD KEY `CourseID` (`CourseID`),
-  ADD KEY `UserID` (`UserID`);
+ALTER TABLE `paymenthistory`
+  ADD PRIMARY KEY (`Payment_ID`);
 
 --
--- Indexes for table `teacher`
+-- Chỉ mục cho bảng `tag`
 --
-ALTER TABLE `teacher`
-  ADD PRIMARY KEY (`TeacherID`);
+ALTER TABLE `tag`
+  ADD PRIMARY KEY (`Tag_ID`),
+  ADD KEY `Category_ID` (`Category_ID`);
 
 --
--- Indexes for table `user`
+-- Chỉ mục cho bảng `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`UserID`);
+  ADD PRIMARY KEY (`User_ID`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT cho các bảng đã đổ
 --
 
 --
--- AUTO_INCREMENT for table `course`
+-- AUTO_INCREMENT cho bảng `course`
 --
 ALTER TABLE `course`
-  MODIFY `CourseID` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `Course_ID` int(10) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `lesson`
+-- AUTO_INCREMENT cho bảng `discuss`
+--
+ALTER TABLE `discuss`
+  MODIFY `Discuss_ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `lesson`
 --
 ALTER TABLE `lesson`
-  MODIFY `LessonID` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `Lesson_ID` int(10) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `teacher`
+-- AUTO_INCREMENT cho bảng `paymenthistory`
 --
-ALTER TABLE `teacher`
-  MODIFY `TeacherID` int(10) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `paymenthistory`
+  MODIFY `Payment_ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT cho bảng `tag`
+--
+ALTER TABLE `tag`
+  MODIFY `Tag_ID` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `user`
 --
 ALTER TABLE `user`
-  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `User_ID` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- Constraints for dumped tables
+-- Các ràng buộc cho các bảng đã đổ
 --
 
 --
--- Constraints for table `course`
+-- Các ràng buộc cho bảng `course`
 --
 ALTER TABLE `course`
-  ADD CONSTRAINT `course_ibfk_1` FOREIGN KEY (`TeacherID`) REFERENCES `teacher` (`TeacherID`);
+  ADD CONSTRAINT `course_ibfk_1` FOREIGN KEY (`Author_ID`) REFERENCES `user` (`User_ID`);
 
 --
--- Constraints for table `pay`
+-- Các ràng buộc cho bảng `courseEnrollment`
 --
-ALTER TABLE `pay`
-  ADD CONSTRAINT `pay_ibfk_1` FOREIGN KEY (`CourseID`) REFERENCES `course` (`CourseID`),
-  ADD CONSTRAINT `pay_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`);
+ALTER TABLE `courseEnrollment`
+  ADD CONSTRAINT `courseEnrollment_ibfk_1` FOREIGN KEY (`User_ID`) REFERENCES `user` (`User_ID`),
+  ADD CONSTRAINT `courseEnrollment_ibfk_2` FOREIGN KEY (`Course_ID`) REFERENCES `course` (`Course_ID`),
+  ADD CONSTRAINT `courseEnrollment_ibfk_3` FOREIGN KEY (`Payment_ID`) REFERENCES `paymenthistory` (`Payment_ID`);
+
+--
+-- Các ràng buộc cho bảng `discuss`
+--
+ALTER TABLE `discuss`
+  ADD CONSTRAINT `discuss_ibfk_1` FOREIGN KEY (`User_ID`) REFERENCES `user` (`User_ID`),
+  ADD CONSTRAINT `discuss_ibfk_2` FOREIGN KEY (`Course_ID`) REFERENCES `course` (`Course_ID`);
+
+--
+-- Các ràng buộc cho bảng `lesson`
+--
+ALTER TABLE `lesson`
+  ADD CONSTRAINT `lesson_ibfk_1` FOREIGN KEY (`Course_ID`) REFERENCES `course` (`Course_ID`);
+
+--
+-- Các ràng buộc cho bảng `tag`
+--
+ALTER TABLE `tag`
+  ADD CONSTRAINT `tag_ibfk_1` FOREIGN KEY (`Category_ID`) REFERENCES `category` (`Category_ID`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
