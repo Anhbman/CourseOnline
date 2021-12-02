@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\user;
-
+use App\Models\course;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -28,5 +28,11 @@ class HomeController extends Controller
     public function showTeacher()
     {
         
+    }
+    public function showCourse() {
+        $course = course::all();
+        return response()->json([
+            'courses' => $course,
+        ]);
     }
 }

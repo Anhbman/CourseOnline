@@ -1,0 +1,13 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\app",
+    "\\app\\Http",
+    "\\app\\Http\\Controllers",
+    "\\app\\Models",
+    "\\public",
+    "\\routes"
+  ],
+  "SelectedNode": "\\app\\Models\\course.php",
+  "PreviewInSolutionExplorer": false
+}

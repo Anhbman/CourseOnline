@@ -20,5 +20,8 @@ use App\Http\Controllers\HomeController;
 // });
 Route::get('/', [AuthController::class, 'check']);
 Route::get('/user', [HomeController::class, 'showUser']);
-
+Route::get('course',[HomeController::class,'showCourse']);
 // Route::post('/reg', [AuthController::class, 'register']);
+Route::get('/hello',function() {
+    return view('hello');
+});
