@@ -7,11 +7,26 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function show() 
+    public function showUser() 
     {
         $user = user::all();
         return response()->json([
             'users' => $user,
         ]);
+    }
+
+    public function showCourseTop()
+    {
+
+    }
+
+    public function showCourseTime()
+    {
+
+    }
+
+    public function showTeacher()
+    {
+        
     }
 }
