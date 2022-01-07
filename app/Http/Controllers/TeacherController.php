@@ -78,7 +78,7 @@ class TeacherController extends Controller
     }
 
     public function topStudents () {
-        $value = DB::select('SELECT ce.User_ID, u.User_name,  COUNT(p.Payment_ID) as count, SUM(p.Payment_price) total
+        $value = DB::select('SELECT ce.User_ID , u.User_name username,  COUNT(p.Payment_ID) order, SUM(p.Payment_price) price
                 FROM courseenrollment ce, course c, paymenthistory p, user u
                 WHERE c.Author_ID = 6
                 AND ce.Course_ID = c.Course_ID
@@ -94,7 +94,7 @@ class TeacherController extends Controller
     }
 
     public function newOrders () {
-        $value = DB::select('SELECT ce.User_ID, u.User_name, Payment_date, (p.Payment_price) total
+        $value = DB::select('SELECT ce.User_ID as id, u.User_name as user, Payment_date as date, (p.Payment_price) price
             FROM courseenrollment ce, course c, paymenthistory p, user u
             WHERE c.Author_ID = 6
             AND ce.Course_ID = c.Course_ID
@@ -109,7 +109,7 @@ class TeacherController extends Controller
     }
 
     public function listStudent () {
-        $value = DB::select('SELECT ce.User_ID, u.User_name, u.User_DoB, u.User_phonenumber, COUNT(ce.Course_ID) count, SUM(p.Payment_price) as total
+        $value = DB::select('SELECT ce.User_ID id, u.User_name name, u.User_phonenumber phone, COUNT(ce.Course_ID) total_order, SUM(p.Payment_price) as total_order
                 FROM courseenrollment ce, course c, user u, paymenthistory p
                 WHERE c.Author_ID = 6
                 AND ce.Course_ID = c.Course_ID
