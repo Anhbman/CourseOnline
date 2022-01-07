@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\user;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -11,31 +13,59 @@ class AuthController extends Controller
     {
         //return response()->json(['error']);
 
-        $userid = $request->input('userid');
+        $account = $request->input('account');
+        $password = md5($request->input('password'));
+        $DoB = $request->input('DoB');
+        $phone = $request->input('phone');
+        $role = $request->input('role');
+        $image = $request->input('image'); 
         $name = $request->input('name');
-        $pws = md5($request->input('pws'));
+        $now = now();
+        $isExisted = user::where([
+            ['User_account','=',$account]
+        ])->exists();
 
-    
-        $success = user::insert([
-            'User_cccount' => $userid,
-            'User_password' => $pws,
-            'User_name' => $name,
-        ]);
-
-        if ($success) {
-            return response()->json([
-                'User_cccount' => $userid,
-                'User_password' => $pws,
-                'User_name' => $name,
-            ]);
-        } else {
-            return response()->json(['error']);
+        if($isExisted){
+            return response()->json(['status'=>false,'description'=>'loi 1']); 
         }
+        else{
+            // $user = new user;
+            // $user->
+            $isSuccess = user::create(array(
+                'User_account' => $account,
+                'User_password' => $password,
+                'User_createdAt' => $now->format('Y-m-d H:i:s'),
+                'User_updatedAt' => $now->format('Y-m-d H:i:s'),
+                'User_DoB' => $DoB,
+                'User_phone' => $phone,
+                'User_role' => $role,
+                'User_name' => $name
+            ));
+            if($isSuccess){
+                return response()->json(['status'=>true],201); 
+            }
+            else{
+                return response()->json(['status'=>false,'description'=>'Error 2'],400);
+            }
+        }  
     }
 
     public function login (Request $request)
     {
-        $userid = $request->input('userid');
-        $pws = md5($request->input('pws'));
+        $Username = $request->input('Username');
+        $pws = md5($request->input('Password'));
+        $isExisted = user::where([
+            ['User_account','=',$Username],
+            ['User_password','=',$pws]
+        ])->exists();
+        echo $isExisted ;
+        return response()->json(['status'=>$isExisted]);
     }
+
+    public function insertCategory(Request $request)
+    {
+        $CategoryName = $request->input('CategoryName');
+    }
+
+
 }

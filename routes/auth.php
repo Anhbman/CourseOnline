@@ -5,7 +5,7 @@ use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
-| login Routes
+| auth Routes
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
@@ -14,6 +14,5 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-
-Route::post('/',[AuthController::class, 'login']);
-
+Route::post('/', [AuthController::class, 'login']);
+Route::get('/', [AuthController::class, 'login']);
