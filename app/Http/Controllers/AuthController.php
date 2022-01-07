@@ -17,7 +17,12 @@ class AuthController extends Controller
     {
         //return response()->json(['error']);
 
-        $userid = $request->input('userid');
+        $account = $request->input('account');
+        $password = md5($request->input('password'));
+        $DoB = $request->input('DoB');
+        $phone = $request->input('phone');
+        $role = $request->input('role');
+        $image = $request->input('image'); 
         $name = $request->input('name');
         $pws = Hash::make(($request->input('pws')));
 
@@ -27,15 +32,29 @@ class AuthController extends Controller
             'User_name' => $name,
         ]);
 
-        if ($success) {
-            return response()->json([
-                'User_account' => $userid,
-                'User_password' => $pws,
-                'User_name' => $name,
-            ]);
-        } else {
+        if (!$success) {
             return response()->json(['error'],400);
-        }
+        }   else{
+            // $user = new user;
+            // $user->
+            $now = now();
+            $isSuccess = user::create(array(
+                'User_account' => $account,
+                'User_password' => $password,
+                'User_createdAt' => $now->format('Y-m-d H:i:s'),
+                'User_updatedAt' => $now->format('Y-m-d H:i:s'),
+                'User_DoB' => $DoB,
+                'User_phone' => $phone,
+                'User_role' => $role,
+                'User_name' => $name
+            ));
+            if($isSuccess){
+                return response()->json(['status'=>true],201); 
+            }
+            else{
+                return response()->json(['status'=>false,'description'=>'Error 2'],400);
+            }
+        }  
     }
 
     public function login(Request $request)
@@ -58,4 +77,6 @@ class AuthController extends Controller
         $user = Auth::user();
         return response()->json([$user]);
     }
+
+
 }

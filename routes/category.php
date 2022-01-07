@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    echo "hello";
-});
+Route::post('/addCategory', [CategoryController::class, 'addCategory']);
+Route::post('/addTag', [CategoryController::class, 'addTag']);
+Route::get('/getListCategories',[CategoryController::class, 'getListCategories']);

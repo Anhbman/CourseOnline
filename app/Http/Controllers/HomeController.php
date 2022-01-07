@@ -36,5 +36,11 @@ class HomeController extends Controller
         return response()->json([
             '$teacher' => $teacher,
         ]);
+
+    }
+    public function getListCourses()
+    {
+        $listCourses = [];
+
     }
 }

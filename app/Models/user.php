@@ -9,9 +9,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     // use HasFactory;
+    protected $fillable = ['User_account','User_password','User_name','User_DoB','User_phone',
+            'User_createdAt','User_updatedAt','User_image','User_role'];
     protected $table = 'user';
     protected $primaryKey = 'User_ID';
-    public $timestamps = true;
     const CREATED_AT = 'User_created';
     const UPDATED_AT = 'User_updated';
     // protected $fillable = [
@@ -27,4 +28,8 @@ class User extends Authenticatable
     {
         return 'User_account';
     }
+    public $timestamps = false;
+    // protected $dateFormat = 'd-m-Y';
+
+
 }
