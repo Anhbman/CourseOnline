@@ -11,7 +11,7 @@ class AuthController extends Controller
 {
     public function username()
     {
-        return 'User_cccount';
+        return 'User_account';
     }
     public function register (Request $request)
     {
@@ -22,19 +22,19 @@ class AuthController extends Controller
         $pws = Hash::make(($request->input('pws')));
 
         $success = user::insert([
-            'User_cccount' => $userid,
+            'User_account' => $userid,
             'User_password' => $pws,
             'User_name' => $name,
         ]);
 
         if ($success) {
             return response()->json([
-                'User_cccount' => $userid,
+                'User_account' => $userid,
                 'User_password' => $pws,
                 'User_name' => $name,
             ]);
         } else {
-            return response()->json(['error']);
+            return response()->json(['error'],400);
         }
     }
 
@@ -43,9 +43,9 @@ class AuthController extends Controller
         $userid = $request->input('userid');
         $pws = $request->input('pws');
 
-        if (Auth::attempt(['User_cccount' => $userid, 'password' => $pws])) {
+        if (Auth::attempt(['User_account' => $userid, 'password' => $pws])) {
             return response()->json([
-                'User_cccount' => $userid,
+                'User_account' => $userid,
                 'User_password' => $pws,
             ]);
         } else {

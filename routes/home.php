@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,3 +17,6 @@ use App\Http\Controllers\AuthController;
 */
 
 Route::post('/', [AuthController::class, 'register']);
+
+Route::get('/courseTop',[HomeController::class, 'showCourseTop']);
+Route::get('/teacher', [HomeController::class, 'showTeacher']);

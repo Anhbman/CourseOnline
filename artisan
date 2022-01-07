@@ -1,4 +1,6 @@
 #!/usr/bin/env php
+<?php header('Access-Control-Allow-Origin: *'); ?>
+
 <?php
 
 define('LARAVEL_START', microtime(true));

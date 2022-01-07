@@ -20,5 +20,6 @@ use App\Http\Controllers\HomeController;
 // });
 Route::get('/', [AuthController::class, 'check']);
 Route::get('/user', [HomeController::class, 'showUser']);
+Route::post('/register', [AuthController::class, 'register']);
 
 // Route::post('/reg', [AuthController::class, 'register']);

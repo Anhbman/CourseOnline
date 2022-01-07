@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 use App\Models\user;
+use App\Models\course;
 
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function showUser() 
+    public function showUser()
     {
         $user = user::all();
         return response()->json([
@@ -17,7 +18,10 @@ class HomeController extends Controller
 
     public function showCourseTop()
     {
-
+        $courseTop = course::all();
+        return response()->json([
+            $courseTop,
+            ]);
     }
 
     public function showCourseTime()
@@ -27,6 +31,10 @@ class HomeController extends Controller
 
     public function showTeacher()
     {
-        
+        $teacher = user::all()->where('User_role',1);
+
+        return response()->json([
+            '$teacher' => $teacher,
+        ]);
     }
 }

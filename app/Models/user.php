@@ -11,7 +11,9 @@ class User extends Authenticatable
     // use HasFactory;
     protected $table = 'user';
     protected $primaryKey = 'User_ID';
-    public $timestamps = false;
+    public $timestamps = true;
+    const CREATED_AT = 'User_created';
+    const UPDATED_AT = 'User_updated';
     // protected $fillable = [
     //     'User_ID', 'User_cccount', 'User_password','User_name',
     // ];
@@ -23,6 +25,6 @@ class User extends Authenticatable
 
     public function username()
     {
-        return 'User_cccount';
+        return 'User_account';
     }
 }
