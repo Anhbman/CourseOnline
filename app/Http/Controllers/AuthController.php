@@ -22,12 +22,12 @@ class AuthController extends Controller
         $DoB = $request->input('DoB');
         $phone = $request->input('phone');
         $role = $request->input('role');
-        $image = $request->input('image'); 
+        $image = $request->input('image');
         $name = $request->input('name');
         $pws = Hash::make(($request->input('pws')));
 
         $success = user::insert([
-            'User_account' => $userid,
+            'User_account' => $account,
             'User_password' => $pws,
             'User_name' => $name,
         ]);
@@ -49,12 +49,12 @@ class AuthController extends Controller
                 'User_name' => $name
             ));
             if($isSuccess){
-                return response()->json(['status'=>true],201); 
+                return response()->json(['status'=>true],201);
             }
             else{
                 return response()->json(['status'=>false,'description'=>'Error 2'],400);
             }
-        }  
+        }
     }
 
     public function login(Request $request)
