@@ -13,4 +13,8 @@ class course extends Model
     protected $table = 'course';
     protected $primaryKey = 'Course_ID';
     public $timestamps = false;
+
+    public function courseEnrollment () {
+        return $this->hasMany('App\Models\courseEnrollment','Course_ID','Course_ID');
+    }
 }

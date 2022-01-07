@@ -11,4 +11,8 @@ class paymenthistory extends Model
     protected $table = 'paymenthistory';
     protected $primaryKey = 'Payment_ID';
     public $timestamps = false;
+
+    public function paymentCourse() {
+        return $this->hasMany('App\Models\courseEnrollment','Payment_ID','Payment_ID');
+    }
 }

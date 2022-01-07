@@ -18,7 +18,7 @@ class User extends Authenticatable
     // protected $fillable = [
     //     'User_ID', 'User_cccount', 'User_password','User_name',
     // ];
-    
+
     public function getAuthPassword()
     {
         return $this->User_password;
@@ -31,5 +31,8 @@ class User extends Authenticatable
     public $timestamps = false;
     // protected $dateFormat = 'd-m-Y';
 
+    public function teacherCourse() {
+        return $this->hasMany('App\Models\course','Author_ID','User_ID');
+    }
 
 }

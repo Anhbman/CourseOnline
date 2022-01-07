@@ -20,4 +20,9 @@ Route::get('/', function () {
 });
 Route::get('/reg', [AuthController::class, 'register']);
 
-// Route::post('/reg', [AuthController::class, 'register']);
+Route::get('test', function () {
+    $result = App\Models\User::find(5)->teacherCourse;
+
+    echo $result;
+});
+

@@ -49,7 +49,7 @@ class RouteServiceProvider extends ServiceProvider
             Route::prefix('home')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/home.php'));
-            Route::prefix('course')
+            Route::prefix('')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/course.php'));
             Route::prefix('teacher')
@@ -58,9 +58,12 @@ class RouteServiceProvider extends ServiceProvider
             Route::prefix('auth')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/auth.php'));
-            Route::prefix('admin')
+            Route::prefix('')
                 ->namespace($this->namespace)
-                ->group(base_path('routes/category.php'));                
+                ->group(base_path('routes/category.php'));
+            Route::prefix('manage')
+                ->namespace($this->namespace)
+                ->group(base_path('routes/manage.php'));
 
         });
     }

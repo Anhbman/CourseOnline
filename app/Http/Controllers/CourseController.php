@@ -6,17 +6,15 @@ use Illuminate\Http\Request;
 use App\Models\course;
 use App\Models\lesson;
 use App\Models\user;
-use App\Models\courseenrollment;
+use App\Models\courseEnrollment;
 use App\Models\paymenthistory;
 use App\Models\comment;
 
 
 class CourseController extends Controller
 {
-
-
     public function addCourse(Request $request)
-    {   
+    {
         $newCourse = new course;
         $newCourse->Author_ID = $request->input('Author_ID');
         $newCourse->Course_header = $request->input('Course_header');
@@ -46,7 +44,7 @@ class CourseController extends Controller
     }
 
     public function getPendingCourses()
-    {   
+    {
         $lists = array();
         $pendingCourses = course::where('Course_approve','=','0')->get();
         // echo $pendingCourses;
@@ -57,14 +55,12 @@ class CourseController extends Controller
             // $lists.push($list);
             array_push($lists,$list);
         }
-        // foreach($lists as $value){
-        //     echo $value->;
-        // }
+
         return response()->json($lists,200);
     }
 
     public function getApprovedCourses()
-    {   
+    {
         $lists = array();
         $approvedCourses = course::where('Course_approve','=','1')->get();
         // echo $approvedCourses;
@@ -79,16 +75,15 @@ class CourseController extends Controller
     }
 
     public function approveCourse(Request $request)
-    {   
+    {
         $approveCourse = $request->input('Course_ID');
         course::where('Course_ID','=', $approveCourse)->update(['Course_approve' => '1']);
-        // $course->Course_approve = 1;
-        // $course->save();
+
         return response()->json(['message' => 'Succesfully'],200);
     }
 
     public function buyCourse(Request $request)
-    {   
+    {
         $course_ID = $request->input('Course_ID');
         // echo $course_ID;
         $user_ID = $request->input('User_ID');
@@ -97,8 +92,8 @@ class CourseController extends Controller
         // echo $course_price[0]->Course_price;
         $newPayment->Payment_price = $course_price[0]->Course_price;
         $newPayment->save();
-        // echo $newPayment;
-        $newEnrollment = new courseenrollment;
+
+        $newEnrollment = new courseEnrollment;
         $newEnrollment->User_ID = $user_ID;
         $newEnrollment->Course_ID = $course_ID;
         $newEnrollment->Payment_ID = $newPayment->Payment_ID;
@@ -107,28 +102,29 @@ class CourseController extends Controller
         return response()->json(['message' => 'Succesfully'],201);
     }
     protected function getCourse($course_ID)
-    {   
+    {
         // echo $course_ID;
         $course = course::where('Course_ID','=',$course_ID)->get();
         return $course;
     }
+
     public function getBoughtCourses(Request $request)
-    {   
+    {
         $user_ID = $request->input('User_ID');
         $lists = array();
-        $listsBoughtCourse = courseenrollment::where('User_ID','=',$user_ID)->get(['Course_ID']);
+        $listsBoughtCourse = courseEnrollment::where('User_ID','=',$user_ID)->get(['Course_ID']);
         foreach($listsBoughtCourse as $course)
-        {   
+        {
             array_push($lists,self::getCourse($course->Course_ID));
         }
         return response()->json($lists,200);
     }
 
     public function getInforCourse(Request $request)
-    {   
+    {
         // echo $request;
         $course = self::getCourse($request->input('Course_ID'));
-        // echo $course;
+
         return response()->json($course,200);
     }
 
@@ -142,14 +138,14 @@ class CourseController extends Controller
         $comment->Comment_at = now();
         $comment->save();
         $newRate = comment::where('Comment_in','=',$comment->Comment_in)->avg('User_rate');
-        // echo $commentLists . "\n";
+
         $course_rate = course::where('Course_ID','=',$comment->Comment_in)->update(['Course_rate'=>$newRate]);
-        // echo $course_rate[0]->Course_rate . "\n";
+
         return response()->json(['message' => 'Succesfully'],201);
     }
 
     public function showComment(Request $request)
-    {   
+    {
         $listsComment = array();
         $Course_ID = $request->input('Course_ID');
         $Comments_in_course = comment::where('Comment_in','=',$Course_ID)->get();

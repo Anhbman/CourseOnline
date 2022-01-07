@@ -80,7 +80,7 @@ INSERT INTO `course` (`Course_ID`, `Course_header`, `Course_description`, `Cours
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `courseenrollment`
+-- Cấu trúc bảng cho bảng `courseEnrollment`
 --
 
 CREATE TABLE `courseenrollment` (
@@ -91,7 +91,7 @@ CREATE TABLE `courseenrollment` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Đang đổ dữ liệu cho bảng `courseenrollment`
+-- Đang đổ dữ liệu cho bảng `courseEnrollment`
 --
 
 INSERT INTO `courseenrollment` (`User_ID`, `Course_ID`, `Payment_ID`, `Payment_date`) VALUES
@@ -247,7 +247,7 @@ ALTER TABLE `course`
   ADD KEY `Course_tag` (`Course_tag`);
 
 --
--- Chỉ mục cho bảng `courseenrollment`
+-- Chỉ mục cho bảng `courseEnrollment`
 --
 ALTER TABLE `courseenrollment`
   ADD KEY `User_ID` (`User_ID`),
@@ -346,7 +346,7 @@ ALTER TABLE `course`
   ADD CONSTRAINT `Course_ibfk_2` FOREIGN KEY (`Course_tag`) REFERENCES `tag` (`Tag_ID`);
 
 --
--- Các ràng buộc cho bảng `courseenrollment`
+-- Các ràng buộc cho bảng `courseEnrollment`
 --
 ALTER TABLE `courseenrollment`
   ADD CONSTRAINT `CourseEnrollment_ibfk_1` FOREIGN KEY (`User_ID`) REFERENCES `user` (`User_ID`),
