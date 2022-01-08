@@ -19,6 +19,7 @@ Route::group(['prefix' => 'manage/teacher'], function () {
     Route::post('/addLesson', [CourseController::class, 'addLesson']);
     Route::post('/addChap', [CourseController::class, 'addChap']);
     Route::post('/addCourseTag', [CourseController::class, 'addCourseTag']);
+    Route::post('/getListUploadedCourses', [CourseController::class, 'getListUploadedCourses']);
 });
 
 Route::group(['prefix' => 'manage/admin'], function () {
@@ -31,6 +32,8 @@ Route::group(['prefix' => 'manage/admin'], function () {
 // Route::post('/buyCourse', [CourseController::class],'buyCourse');
 Route::get('/getApprovedCourses', [CourseController::class, 'getApprovedCourses']);
 Route::get('/getListCoursesByCategory/{categoryID}',[CourseController::class, 'getListCoursesByCategory']);
+Route::get('/getListCoursesByTag/{tagID}',[CourseController::class, 'getListCoursesByTag']);
+Route::get('/getCourseDetail/{courseID}',[CourseController::class, 'getCourseDetail']);
 Route::group(['prefix' => 'user'], function () {
     Route::post('/buyCourse',[CourseController::class, 'buyCourse']);
     Route::post('/getBoughtCourses',[CourseController::class, 'getBoughtCourses']);
