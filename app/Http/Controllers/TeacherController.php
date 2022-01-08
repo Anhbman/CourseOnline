@@ -14,7 +14,7 @@ class TeacherController extends Controller
         $courseTotal = User::find(6)->teacherCourse->count();
         $studentTotal = DB::select('SELECT COUNT(ce.User_ID) as total
                     FROM courseenrollment ce, course c
-                    WHERE c.Author_ID = 6
+                    WHERE c.Author_ID = 20
                     AND ce.Course_ID = c.Course_ID
                     GROUP BY c.Author_ID');
 
