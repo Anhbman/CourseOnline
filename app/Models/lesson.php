@@ -11,5 +11,8 @@ class lesson extends Model
     protected $fillable = ['Lesson_ID','Course_ID','Lesson_header','Lesson_description','Lesson_uploadedAt','Lesson_video','Lesson_view'];
     protected $table = 'lesson';
     protected $primaryKey = 'lesson_ID';
-    public $timestamps = false;
+    const CREATED_AT = 'Course_uploadedAt';
+    // const UPDATED_AT = 'Course_updatedAt';
+    // public $timestamps = false;
+    protected $hidden = ['Course_createdAt','Course_updatedAt','Course_approve'];
 }

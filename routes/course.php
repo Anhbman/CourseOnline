@@ -30,7 +30,7 @@ Route::group(['prefix' => 'manage/admin'], function () {
 
 // Route::post('/buyCourse', [CourseController::class],'buyCourse');
 Route::get('/getApprovedCourses', [CourseController::class, 'getApprovedCourses']);
-
+Route::get('/getListCoursesByCategory/{categoryID}',[CourseController::class, 'getListCoursesByCategory']);
 Route::group(['prefix' => 'user'], function () {
     Route::post('/buyCourse',[CourseController::class, 'buyCourse']);
     Route::post('/getBoughtCourses',[CourseController::class, 'getBoughtCourses']);
