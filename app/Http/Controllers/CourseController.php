@@ -14,14 +14,14 @@ use App\Models\coursetag;
 
 
 class CourseController extends Controller
-{   
+{
     public function addCourseTag(Request $request)
     {
         $newCourseTag = new coursetag;
         $newCourseTag->Course_ID = $request->input('Course_ID');
         $newCourseTag->Tag_ID = $request->input('Tag_ID');
         $newCourseTag->save();
-        // echo $newCourse; 
+        // echo $newCourse;
         return response()->json(['status'=>'Add Course Successfully'],201);
     }
 
@@ -43,7 +43,7 @@ class CourseController extends Controller
     public function addLesson(Request $request)
     {
         $newLesson = new lesson;
-        $newLesson->Course_ID = $request->input('Course_ID');
+        $newLesson->Chap_ID = $request->input('Chap_ID');
         $newLesson->Lesson_header = $request->input('Lesson_header');
         $newLesson->Lesson_description = $request->input('Lesson_description');
         $newLesson->Lesson_uploadedAt = now();
@@ -57,7 +57,7 @@ class CourseController extends Controller
     {
         $newChap = new Chap;
         $newChap->Chap_header = $request->input('Chap_header');
-        $newChap->Course_ID = $request->input('Course_ID'); 
+        $newChap->Course_ID = $request->input('Course_ID');
         $newChap->save();
         return response()->json(['status'=>'Add Chap Successfully'],201);
     }

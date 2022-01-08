@@ -10,4 +10,6 @@ Route::group(['prefix' => 'teacher'], function () {
     Route::get('/topStudents', [TeacherController::class, 'topStudents']);
     Route::get('/newOrders', [TeacherController::class, 'newOrders']);
     Route::get('/listStudent', [TeacherController::class, 'listStudent']);
+    Route::get('/listCoures', [TeacherController::class, 'listCoures']);
+    Route::get('/listHistory', [TeacherController::class, 'listHistory']);
 });
