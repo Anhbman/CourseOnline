@@ -10,5 +10,6 @@ class courseEnrollment extends Model
     // use HasFactory;
     protected $table = 'courseenrollment';
     // protected $primaryKey = 'Course_ID';
-    public $timestamps = false;
+    const CREATED_AT = 'Payment_date';
+    // public $timestamps = false;
 }

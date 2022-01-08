@@ -28,7 +28,7 @@ class CategoryController extends Controller
         $listCategories = category::all();
         foreach($listCategories as $category)
         {   
-            echo $category->Category_ID;
+            // echo $category->Category_ID;
             $listTags = tag::where('Category_ID','=',$category->Category_ID)->get();
             $list = array('category'=>$category,'tags'=>$listTags);
             array_push($lists,$list);
@@ -43,6 +43,7 @@ class CategoryController extends Controller
             'Category_ID' => $request->input('Category_ID'),
             'Tag_name' => $request->input('Tag_name')
         ));
+        
         if($isSuccess){
             return response()->json(['status'=>true],201); 
         }

@@ -13,8 +13,8 @@ class User extends Authenticatable
             'User_createdAt','User_updatedAt','User_image','User_role'];
     protected $table = 'user';
     protected $primaryKey = 'User_ID';
-    const CREATED_AT = 'User_created';
-    const UPDATED_AT = 'User_updated';
+    const CREATED_AT = 'User_createdAt';
+    const UPDATED_AT = 'User_updatedAt';
     // protected $fillable = [
     //     'User_ID', 'User_cccount', 'User_password','User_name',
     // ];
