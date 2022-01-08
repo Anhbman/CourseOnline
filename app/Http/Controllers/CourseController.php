@@ -9,10 +9,22 @@ use App\Models\user;
 use App\Models\courseEnrollment;
 use App\Models\paymenthistory;
 use App\Models\comment;
+use App\Models\chap;
+use App\Models\coursetag;
 
 
 class CourseController extends Controller
-{
+{   
+    public function addCourseTag(Request $request)
+    {
+        $newCourseTag = new coursetag;
+        $newCourseTag->Course_ID = $request->input('Course_ID');
+        $newCourseTag->Tag_ID = $request->input('Tag_ID');
+        $newCourseTag->save();
+        // echo $newCourse; 
+        return response()->json(['status'=>'Add Course Successfully'],201);
+    }
+
     public function addCourse(Request $request)
     {
         $newCourse = new course;
@@ -21,10 +33,8 @@ class CourseController extends Controller
         $newCourse->Course_description = $request->input('Course_description');
         $newCourse->Course_price = $request->input('Course_price');
         $newCourse->Course_image = $request->input('Course_image');
-        $newCourse->Course_tag = $request->input('Course_tag');
-        $newCourse->course_createdAt = now();
-        $newCourse->course_updatedAt = now();
-        $newCourse->course_rate = 0;
+        $newCourse->Course_category = $request->input('Course_category');
+        // $newCourse->course_rate = 0;
         $newCourse->save();
         echo $newCourse;
         return response()->json(['status'=>'Add Course Successfully'],201);
@@ -41,6 +51,15 @@ class CourseController extends Controller
         $newLesson->Lesson_view = 0;
         $newLesson->save();
         return response()->json(['status'=>'Add Lesson Successfully'],201);
+    }
+
+    public function addChap(Request $request)
+    {
+        $newChap = new Chap;
+        $newChap->Chap_header = $request->input('Chap_header');
+        $newChap->Course_ID = $request->input('Course_ID'); 
+        $newChap->save();
+        return response()->json(['status'=>'Add Chap Successfully'],201);
     }
 
     public function getPendingCourses()
@@ -124,7 +143,6 @@ class CourseController extends Controller
     {
         // echo $request;
         $course = self::getCourse($request->input('Course_ID'));
-
         return response()->json($course,200);
     }
 

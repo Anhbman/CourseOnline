@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\course;
+use App\Models\teacherInformation;
 use Illuminate\Support\Facades\DB;
 
 class TeacherController extends Controller
@@ -34,7 +35,6 @@ class TeacherController extends Controller
                 GROUP BY c.Author_ID
                 '
         );
-
         return response()->json(
             ['courseTotal' => $courseTotal,
              'studentTotal' =>   $studentTotal[0]->total,
@@ -64,11 +64,11 @@ class TeacherController extends Controller
         ');
 
         foreach ($value as $item) {
-            $newStudent[$item->month] = $item->total;
+            $newStudent[$item->month] = (int)$item->total;
         }
 
         foreach ($value2 as $item) {
-            $revune[$item->month] = $item->total;
+            $revune[$item->month] = (int)$item->total;
         }
 
         return response()->json([
@@ -78,7 +78,7 @@ class TeacherController extends Controller
     }
 
     public function topStudents () {
-        $value = DB::select('SELECT ce.User_ID , u.User_name username,  COUNT(p.Payment_ID) order, SUM(p.Payment_price) price
+        $value = DB::select('SELECT ce.User_ID , u.User_name username,  COUNT(p.Payment_ID) "order", SUM(p.Payment_price) price
                 FROM courseenrollment ce, course c, paymenthistory p, user u
                 WHERE c.Author_ID = 6
                 AND ce.Course_ID = c.Course_ID
@@ -119,6 +119,21 @@ class TeacherController extends Controller
 
         return response()->json([
             $value[0]
+        ],200);
+    }
+
+    public function updateInforTeacher(Request $request)
+    {   
+        $id = $request->input('Teacher_ID');
+        $header = $request->input('Teacher_header');
+        $des = $request->input('Teacher_description');
+        $teacherInfor = teacherInformation::where('Teacher_ID',$id);
+        $teacherInfor->update([
+            'Teacher_header' => $header,
+            'Teacher_description' => $des,
+        ]);
+        return response()->json([
+            'status' => 'Update thanh cong'
         ],200);
     }
 }

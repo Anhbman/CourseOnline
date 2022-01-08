@@ -17,22 +17,24 @@ use App\Http\Controllers\CourseController;
 Route::group(['prefix' => 'manage/teacher'], function () {
     Route::post('/addCourse', [CourseController::class, 'addCourse']);
     Route::post('/addLesson', [CourseController::class, 'addLesson']);
+    Route::post('/addChap', [CourseController::class, 'addChap']);
+    Route::post('/addCourseTag', [CourseController::class, 'addCourseTag']);
 });
 
 Route::group(['prefix' => 'manage/admin'], function () {
     Route::post('/approveCourse', [CourseController::class, 'approveCourse']);
     Route::get('/getPendingCourses', [CourseController::class, 'getPendingCourses']);
-    Route::get('/getApprovedCourses', [CourseController::class, 'getApprovedCourses']);
+    // Route::get('/getApprovedCourses', [CourseController::class, 'getApprovedCourses']);
 });
 
 
 // Route::post('/buyCourse', [CourseController::class],'buyCourse');
-
+Route::get('/getApprovedCourses', [CourseController::class, 'getApprovedCourses']);
 
 Route::group(['prefix' => 'user'], function () {
     Route::post('/buyCourse',[CourseController::class, 'buyCourse']);
     Route::post('/getBoughtCourses',[CourseController::class, 'getBoughtCourses']);
-    Route::post('/getInforCourse',[CourseController::class, 'getInforCourse']);
+    Route::get('/getInforCourse',[CourseController::class, 'getInforCourse']);
     Route::post('/updateCourseRate',[CourseController::class, 'updateCourseRate']);
     Route::post('/showComment',[CourseController::class, 'showComment']);
 });

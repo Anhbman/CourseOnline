@@ -12,7 +12,9 @@ class course extends Model
     //         'Course_rate'];
     protected $table = 'course';
     protected $primaryKey = 'Course_ID';
-    public $timestamps = false;
+    // public $timestamps = false;
+    const CREATED_AT = 'Course_created';
+    const UPDATED_AT = 'Course_updated';
 
     public function courseEnrollment () {
         return $this->hasMany('App\Models\courseEnrollment','Course_ID','Course_ID');

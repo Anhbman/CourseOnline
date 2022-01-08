@@ -50,23 +50,29 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/home.php'));
             Route::prefix('')
+                // ->middleware(['api'])
                 ->namespace($this->namespace)
                 ->group(base_path('routes/course.php'));
             Route::prefix('teacher')
+                // ->middleware(['api','cors'])
                 ->namespace($this->namespace)
                 ->group(base_path('routes/teacher.php'));
             Route::prefix('auth')
+                // ->middleware(['api','cors'])
                 ->namespace($this->namespace)
                 ->group(base_path('routes/auth.php'));
             Route::prefix('')
+                // ->middleware(['api','cors'])
                 ->namespace($this->namespace)
                 ->group(base_path('routes/category.php'));
             Route::prefix('manage')
+                // ->middleware(['api','cors'])
                 ->namespace($this->namespace)
                 ->group(base_path('routes/manage.php'));
 
         });
     }
+    
 
     /**
      * Configure the rate limiters for the application.
