@@ -1,24 +1,23 @@
 <?php
-
 namespace App\Http\Controllers;
-
+header('Access-Control-Allow-Headers: Content-Type');
 use Illuminate\Http\Request;
 use Illuminate\Contracts\Support\Jsonable;
-use App\Models\course;
-use App\Models\lesson;
-use App\Models\user;
-use App\Models\courseEnrollment;
-use App\Models\paymenthistory;
-use App\Models\comment;
-use App\Models\chap;
-use App\Models\coursetag;
+use App\Models\Course;
+use App\Models\Lesson;
+use App\Models\User;
+use App\Models\CourseEnrollment;
+use App\Models\PaymentHistory;
+use App\Models\Comment;
+use App\Models\Chap;
+use App\Models\CourseTag;
 
 
 class CourseController extends Controller
 {   
     public function addCourseTag(Request $request)
     {
-        $newCourseTag = new coursetag;
+        $newCourseTag = new CourseTag;
         $newCourseTag->Course_ID = $request->input('Course_ID');
         $newCourseTag->Tag_ID = $request->input('Tag_ID');
         $newCourseTag->save();
@@ -28,7 +27,7 @@ class CourseController extends Controller
 
     public function addCourse(Request $request)
     {
-        $newCourse = new course;
+        $newCourse = new Course;
         $newCourse->Author_ID = $request->input('Author_ID');
         $newCourse->Course_header = $request->input('Course_header');
         $newCourse->Course_description = $request->input('Course_description');
@@ -43,7 +42,7 @@ class CourseController extends Controller
 
     public function addLesson(Request $request)
     {
-        $newLesson = new lesson;
+        $newLesson = new Lesson;
         $newLesson->Chap_ID = $request->input('Chap_ID');
         $newLesson->Lesson_header = $request->input('Lesson_header');
         $newLesson->Lesson_description = $request->input('Lesson_description');
@@ -56,7 +55,7 @@ class CourseController extends Controller
 
     public function addChap(Request $request)
     {
-        $newChap = new chap;
+        $newChap = new Chap;
         $newChap->Chap_header = $request->input('Chap_header');
         $newChap->Course_ID = $request->input('Course_ID'); 
         $newChap->save();
@@ -66,25 +65,27 @@ class CourseController extends Controller
     public function getPendingCourses()
     {
         $lists = array();
-        $pendingCourses = course::where('Course_approve','=','0')->get();
+        $pendingCourses = Course::where('Course_approve','=','0')->get();
         // echo $pendingCourses;
+        // echo $list;
         foreach($pendingCourses as $course){
-            $lessons = lesson::where('Course_ID','=',$course->Course_ID)->get();
+            // echo $course->Course_ID;
+            $name = User::where('User_ID','=',$course->Author_ID)->pluck('User_name');
+            $course->{'name'} = $name[0];
             // echo $lessons;
-            $list =  array('course' =>$course , 'lesson' => $lessons);
+            // $list =  array('course' =>$course , 'lesson' => $lessons);
             // $lists.push($list);
-            array_push($lists,$list);
+            // array_push($lists,$list);
         }
-
-        return response()->json($lists,200);
+        return response()->json($pendingCourses,200);
     }
 
     public function getApprovedCourses()
     {
         $lists = array();
-        $approvedCourses = course::where('Course_approve','=','1')->get();
+        $approvedCourses = Course::where('Course_approve','=','1')->get();
         foreach($approvedCourses as $course){
-            $author = user::where('User_ID','=',$course->Author_ID);
+            $author = User::where('User_ID','=',$course->Author_ID);
             $list =  array('course' =>$course , 'author' => (($author->get())[0]->User_name));
             array_push($lists,$list);
         }
@@ -94,7 +95,7 @@ class CourseController extends Controller
     public function approveCourse(Request $request)
     {
         $approveCourse = $request->input('Course_ID');
-        course::where('Course_ID','=', $approveCourse)->update(['Course_approve' => '1']);
+        Course::where('Course_ID','=', $approveCourse)->update(['Course_approve' => '1']);
 
         return response()->json(['message' => 'Succesfully'],200);
     }
@@ -104,12 +105,12 @@ class CourseController extends Controller
         $course_ID = $request->input('Course_ID');
         // echo $course_ID;
         $user_ID = $request->input('User_ID');
-        $newPayment = new paymenthistory;
+        $newPayment = new PaymentHistory;
         $course_price = course::where('Course_ID','=',$course_ID)->get(['Course_price']);
         $newPayment->Payment_price = $course_price[0]->Course_price;
         $newPayment->save();
 
-        $newEnrollment = new courseEnrollment;
+        $newEnrollment = new CourseEnrollment;
         $newEnrollment->User_ID = $user_ID;
         $newEnrollment->Course_ID = $course_ID;
         $newEnrollment->Payment_ID = $newPayment->Payment_ID;
@@ -122,7 +123,7 @@ class CourseController extends Controller
     {
         $user_ID = $request->input('User_ID');
         $lists = array();
-        $listsBoughtCourse = courseEnrollment::where('User_ID','=',$user_ID)->get(['Course_ID']);
+        $listsBoughtCourse = CourseEnrollment::where('User_ID','=',$user_ID)->get(['Course_ID']);
         foreach($listsBoughtCourse as $course)
         {   
             array_push($lists,self::getShortInforCourse($course->Course_ID));
@@ -132,8 +133,8 @@ class CourseController extends Controller
 
     protected function getShortInforCourse($courseID)
     {
-        $course = course::where('Course_ID','=',$courseID)->get(['Course_ID','Course_image','Course_header','Course_price','Course_rate','Author_ID']);
-        $authorName = user::where('User_ID','=',$course[0]->Author_ID)->pluck('User_name');
+        $course = Course::where('Course_ID','=',$courseID)->get(['Course_ID','Course_image','Course_header','Course_price','Course_rate','Author_ID']);
+        $authorName = User::where('User_ID','=',$course[0]->Author_ID)->pluck('User_name');
         $course[0]->{'name'} = $authorName[0];
         return $course[0];
     }
@@ -141,14 +142,14 @@ class CourseController extends Controller
     protected function getFullInforCourse($courseID)
     {   
         $lists = array();
-        $course = course::where('Course_ID','=',$courseID)->get();
-        $authorName = user::where('User_ID','=',$course[0]->Author_ID)->pluck('User_name');
+        $course = Course::where('Course_ID','=',$courseID)->get();
+        $authorName = User::where('User_ID','=',$course[0]->Author_ID)->pluck('User_name');
         $course[0]->{'name'} = $authorName[0];
         array_push($lists,$course[0]);
-        $total = courseEnrollment::where('Course_ID' , '=',$courseID)->count();
+        $total = CourseEnrollment::where('Course_ID' , '=',$courseID)->count();
         $list = array('total'=> $total);
         array_push($lists,$list);
-        $listChaps = chap::where('Course_ID','=',$courseID)->get(['Chap_ID','Chap_header','Chap_description']);
+        $listChaps = Chap::where('Course_ID','=',$courseID)->get(['Chap_ID','Chap_header','Chap_description']);
         foreach($listChaps as $chap)
         {   
             // echo $chap;

@@ -1,26 +1,43 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CourseController;
+
 /*
 |--------------------------------------------------------------------------
-| API Routes
+| Home Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register API routes for your application. These
+| Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
+| contains the "web" middleware group. Now create something great!
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::group(['prefix' => 'manage/teacher'], function () {
+    Route::post('/addCourse', [CourseController::class, 'addCourse']);
+    Route::post('/addLesson', [CourseController::class, 'addLesson']);
+    Route::post('/addChap', [CourseController::class, 'addChap']);
+    Route::post('/addCourseTag', [CourseController::class, 'addCourseTag']);
+    Route::post('/getListUploadedCourses', [CourseController::class, 'getListUploadedCourses']);
 });
 
-Route::get('greeting', function () {
-    return "Xin chào";
+Route::group(['prefix' => 'manage/admin'], function () {
+    Route::post('/approveCourse', [CourseController::class, 'approveCourse']);
+    Route::get('/getPendingCourses', [CourseController::class, 'getPendingCourses']);
 });
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login',[AuthController::class, 'login']);
+
+// Route::post('/buyCourse', [CourseController::class],'buyCourse');
+Route::get('/getApprovedCourses', [CourseController::class, 'getApprovedCourses']);
+Route::get('/getListCoursesByCategory/{categoryID}',[CourseController::class, 'getListCoursesByCategory']);
+Route::get('/getListCoursesByTag/{tagID}',[CourseController::class, 'getListCoursesByTag']);
+Route::get('/getCourseDetail/{courseID}',[CourseController::class, 'getCourseDetail']);
+Route::group(['prefix' => 'user'], function () {
+    Route::post('/buyCourse',[CourseController::class, 'buyCourse']);
+    Route::post('/getBoughtCourses',[CourseController::class, 'getBoughtCourses']);
+    Route::get('/getInforCourse',[CourseController::class, 'getInforCourse']);
+    Route::post('/updateCourseRate',[CourseController::class, 'updateCourseRate']);
+    Route::post('/showComment',[CourseController::class, 'showComment']);
+});
+
